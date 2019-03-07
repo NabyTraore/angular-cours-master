@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/eleves">Elèves</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/salles">Salles</a>
+            </li>
+        </ul>
+        <div class="nav-item dropdown">
+          <a href="" [class]=" !notificationService.list().length ? noNotification : dropdown - toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >
+            <span class="fa fa-bell notification"></span>
+            <span [hidden]="!notificationService.list().length" class="badgeAlert">
+              {{ notificationService.list().length }}
+            </span>
+            <span class="caret"></span>
+          </a>
+          <ul [hidden]="!notificationService.list().length" class="list-notification dropdown-menu">
+            <li *ngFor="let notification of (notificationService.list() | keyvalue)">
+              <div class="media">
+                <div class="media-body">
+                  <div class="suppression-notification">
+                    <button class="btn btn-danger btn-xs button-suppression"
+                      (click)="notificationService.remove(notification.key)"
+                      >x
+                    </button>
+                  </div>
+                  <p>{{ notification.value }}</p>
+                </div>
+              </div>
+            </li>
+            <li class="text-center">
+              <button class="btn btn-primary" (click)="notificationService.clear()" [disabled]="notificationService.list().length === 0">
+                Clear all notification
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+</nav>

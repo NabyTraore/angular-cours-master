@@ -1,0 +1,60 @@
+<div class="row header">
+  <div class="col-6 text-left"><h2>Mes élèves</h2></div>
+  <div class="col-6 text-right"><a class="btn btn-success btn-lg" routerLink="/eleve/new">Ajouter un élève</a></div>
+</div>
+<div class="justify-content-end">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active" (click)="resetFilter()">
+        <input type="radio" name="options" id="option3" autocomplete="off">Tous les élèves
+      </label>
+      <label class="btn btn-secondary" (click)="filterMoreThanThirty()">
+        <input type="radio" name="options" id="option2" autocomplete="off">Plus de 30 ans
+      </label>
+      <label class="btn btn-secondary" (click)="filterJustInitiales()">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> Tronquer les noms
+      </label>
+  </div>
+</div>
+
+<div class="card-columns">
+  <div
+    class="card text-center"
+    *ngFor="let eleve of eleves"
+    style="cursor: pointer"
+  >
+    <a [routerLink]="['/eleve', eleve.id]">
+      <div class="card-header">Elève {{ eleve.id }}</div>
+      <div class="card-body">
+        <h5 *ngIf="justInitiales; else completeName">
+          {{ eleve.nom | uppercase | slice:0:1 }} {{ eleve.prenom | lowercase }}
+        </h5>
+        <ng-template #completeName>
+          {{ eleve.nom | uppercase }} {{ eleve.prenom | lowercase }}
+        </ng-template>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- Utile quand l'opération était définitive -->
+<!-- <div class="modal fade" id="tronquerModal" tabindex="-1" role="dialog" aria-labelledby="tronquerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tronquerModalLabel">Opération sensible</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Vous souhaitez n'afficher que les initiales des noms de familles des élèves. Cette opération est <strong>définitive</strong>.
+          <br />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="filterJustInitiales()" data-dismiss="modal">Continuer</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
